@@ -12,8 +12,8 @@ fun UserEntity.toDomain() = User(
 )
 
 fun User.toData() = UserEntity(
-    firstName = firstName,
-    lastName = lastName,
-    age = age,
-    email = email
+    firstName = firstName ?: "",
+    lastName = lastName ?: "",
+    age = age ?: 0,
+    email = email ?: ""
 )

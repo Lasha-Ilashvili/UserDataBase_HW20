@@ -1,16 +1,19 @@
 package com.example.userdatabase_hw20.domain.repository
 
+import com.example.userdatabase_hw20.data.common.Resource
 import com.example.userdatabase_hw20.data.model.UserEntity
 import com.example.userdatabase_hw20.domain.model.User
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
 
-    fun getAll(): Flow<List<User>>
+    suspend fun getUserCount(): Int
 
-    suspend fun insertUser(user: UserEntity)
+    suspend fun getUser(email: String): User?
 
-    suspend fun deleteUser(user: UserEntity)
+    suspend fun insertUser(user: UserEntity): Flow<Resource>
 
-    suspend fun updateUser(user: UserEntity)
+    suspend fun deleteUser(user: UserEntity): Flow<Resource>
+
+    suspend fun updateUser(user: UserEntity): Flow<Resource>
 }

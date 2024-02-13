@@ -2,6 +2,7 @@ package com.example.userdatabase_hw20.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.userdatabase_hw20.data.common.HandleResponse
 import com.example.userdatabase_hw20.data.dao.UserDao
 import com.example.userdatabase_hw20.data.database.AppDatabase
 import dagger.Module
@@ -28,5 +29,11 @@ object DatabaseModule {
     @Provides
     fun provideUserDao(appDatabase: AppDatabase): UserDao {
         return appDatabase.userDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideHandleResponse(): HandleResponse {
+        return HandleResponse()
     }
 }

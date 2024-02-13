@@ -7,19 +7,18 @@ import kotlinx.coroutines.flow.flow
 
 class HandleResponse {
 
-    fun <T : Number> safeDatabaseCall(call: suspend () -> T): Flow<Resource<T>> = flow {
-        emit(Resource.Loading(loading = true))
-
+    fun safeDatabaseCall(call: suspend () -> Int): Flow<Resource> = flow {
         try {
             val result = call.invoke()
-//            if(result != 0)
-//            emit(Resource.Success(data = result))
+
+            if (result != 0)
+                emit(Resource.Success)
+            else
+                emit(Resource.Error)
         } catch (e: SQLiteConstraintException) {
-            emit(Resource.Error(errorMessage = "Database constraint violation: ${e.localizedMessage}"))
+            emit(Resource.Error)
         } catch (e: Exception) {
-            emit(Resource.Error(errorMessage = "An unexpected error occurred: ${e.localizedMessage}"))
-        } finally {
-            emit(Resource.Loading(loading = false))
+            emit(Resource.Error)
         }
     }
 }

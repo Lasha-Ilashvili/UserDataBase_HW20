@@ -6,13 +6,15 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.example.userdatabase_hw20.data.model.UserEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
 
-    @Query("SELECT * FROM UserEntity")
-    fun getAll(): Flow<List<UserEntity>>
+    @Query("SELECT COUNT(*) FROM UserEntity")
+    suspend fun getUserCount(): Int
+
+    @Query("SELECT * FROM UserEntity WHERE email LIKE :email LIMIT 1")
+    suspend fun getUser(email: String): UserEntity
 
     @Insert
     suspend fun insertUser(user: UserEntity): Long
